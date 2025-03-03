@@ -73,33 +73,189 @@ export default function SalesEstimatesPage() {
           <SubHeading heading='Estimate Management' />
           <SubHeading2 heading='POST /sales/estimates/{sale_estimate_id}/approve' />
           <Paragraph paragraph='Approve a sale estimate.' />
+          <DataTable
+            columns={[
+              { header: 'Parameter', accessorKey: 'parameter' },
+              { header: 'Type', accessorKey: 'type' },
+              { header: 'Description', accessorKey: 'description' },
+            ]}
+            data={[
+              {
+                parameter: 'status_note',
+                type: 'string',
+                description: 'Optional note for approval',
+              }
+            ]}
+          />
 
           <SubHeading2 heading='POST /sales/estimates/{sale_estimate_id}/reject' />
           <Paragraph paragraph='Reject a sale estimate.' />
+          <DataTable
+            columns={[
+              { header: 'Parameter', accessorKey: 'parameter' },
+              { header: 'Type', accessorKey: 'type' },
+              { header: 'Description', accessorKey: 'description' },
+            ]}
+            data={[
+              {
+                parameter: 'rejection_reason',
+                type: 'string',
+                description: 'Reason for rejection',
+              }
+            ]}
+          />
 
           <SubHeading heading='Retrieve Estimates' />
           <SubHeading2 heading='GET /sales/estimates' />
           <Paragraph paragraph='Retrieve all sale estimates.' />
+          <DataTable
+            columns={[
+              { header: 'Parameter', accessorKey: 'parameter' },
+              { header: 'Type', accessorKey: 'type' },
+              { header: 'Description', accessorKey: 'description' },
+            ]}
+            data={[
+              {
+                parameter: 'page',
+                type: 'number',
+                description: 'Page number for pagination',
+              },
+              {
+                parameter: 'limit',
+                type: 'number',
+                description: 'Number of records per page',
+              },
+              {
+                parameter: 'status',
+                type: 'string',
+                description: 'Filter by estimate status',
+              }
+            ]}
+          />
 
           <SubHeading2 heading='GET /sales/estimates/{sale_estimate_id}' />
           <Paragraph paragraph='Retrieve a specific sale estimate.' />
+          <DataTable
+            columns={[
+              { header: 'Parameter', accessorKey: 'parameter' },
+              { header: 'Type', accessorKey: 'type' },
+              { header: 'Description', accessorKey: 'description' },
+            ]}
+            data={[
+              {
+                parameter: 'include_details',
+                type: 'boolean',
+                description: 'Include detailed information',
+              }
+            ]}
+          />
 
           <SubHeading heading='Customer Notifications' />
           <SubHeading2 heading='POST /sales/estimates/{sale_estimate_id}/sms' />
           <Paragraph paragraph='Send SMS notification to customer about the estimate.' />
+          <DataTable
+            columns={[
+              { header: 'Parameter', accessorKey: 'parameter' },
+              { header: 'Type', accessorKey: 'type' },
+              { header: 'Description', accessorKey: 'description' },
+            ]}
+            data={[
+              {
+                parameter: 'message',
+                type: 'string',
+                description: 'Custom SMS message (optional)',
+              },
+              {
+                parameter: 'phone_number',
+                type: 'string',
+                description: 'Override customer phone number',
+              }
+            ]}
+          />
 
           <SubHeading2 heading='POST /sales/estimates/{sale_estimate_id}/mail' />
           <Paragraph paragraph='Send email notification to customer about the estimate.' />
+          <DataTable
+            columns={[
+              { header: 'Parameter', accessorKey: 'parameter' },
+              { header: 'Type', accessorKey: 'type' },
+              { header: 'Description', accessorKey: 'description' },
+            ]}
+            data={[
+              {
+                parameter: 'subject',
+                type: 'string',
+                description: 'Email subject',
+              },
+              {
+                parameter: 'message',
+                type: 'string',
+                description: 'Custom email message',
+              },
+              {
+                parameter: 'email',
+                type: 'string',
+                description: 'Override customer email',
+              }
+            ]}
+          />
 
           <SubHeading2 heading='GET /sales/estimates/{sale_estimate_id}/mail' />
           <Paragraph paragraph='Retrieve default email template for estimate.' />
+          <DataTable
+            columns={[
+              { header: 'Parameter', accessorKey: 'parameter' },
+              { header: 'Type', accessorKey: 'type' },
+              { header: 'Description', accessorKey: 'description' },
+            ]}
+            data={[
+              {
+                parameter: 'template_id',
+                type: 'string',
+                description: 'Specific template ID (optional)',
+              }
+            ]}
+          />
 
           <SubHeading heading='Document Management' />
           <SubHeading2 heading='GET /sales/estimates/{sale_estimate_id}/pdf' />
           <Paragraph paragraph='Retrieve PDF version of the estimate.' />
+          <DataTable
+            columns={[
+              { header: 'Parameter', accessorKey: 'parameter' },
+              { header: 'Type', accessorKey: 'type' },
+              { header: 'Description', accessorKey: 'description' },
+            ]}
+            data={[
+              {
+                parameter: 'template',
+                type: 'string',
+                description: 'PDF template to use',
+              },
+              {
+                parameter: 'language',
+                type: 'string',
+                description: 'Document language',
+              }
+            ]}
+          />
 
           <SubHeading2 heading='DELETE /sales/estimates/{sale_estimate_id}' />
           <Paragraph paragraph='Delete a sale estimate.' />
+          <DataTable
+            columns={[
+              { header: 'Parameter', accessorKey: 'parameter' },
+              { header: 'Type', accessorKey: 'type' },
+              { header: 'Description', accessorKey: 'description' },
+            ]}
+            data={[
+              {
+                parameter: 'force',
+                type: 'boolean',
+                description: 'Force delete even if estimate is approved',
+              }
+            ]}
+          />
 
           <SubHeading heading='Required Headers' />
           <OrderedList

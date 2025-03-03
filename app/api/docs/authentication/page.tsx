@@ -13,8 +13,6 @@ import { DataTable } from '@/components/tableComponent';
 
 export default function AuthenticationPage() {
   const pathname = usePathname();
-  console.log(pathname);
-  1;
   return (
     <>
       <div className='grid lg:grid-cols-6'>
