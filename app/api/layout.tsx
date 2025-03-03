@@ -10,9 +10,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Menu } from 'lucide-react'; // for hamburger icon
+import {  Menu } from 'lucide-react'; // for hamburger icon
 import { useEffect, useState } from 'react';
 import DocsSidebarConstantText from '../constants/DocsSidebarConstants';
+import Link from 'next/link';
 
 export default function DashboardLayout({
   children,
@@ -20,6 +21,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [isMobile, setIsMobile] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -37,14 +39,16 @@ export default function DashboardLayout({
       <div className='mx-auto grid h-screen grid-cols-1 lg:grid-cols-6 xl:max-w-[80%] 2xl:max-w-[80%]'>
         <div className='col-span-1 border-r'>
           {isMobile ? (
-            <DropdownMenu>
+            <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
               <DropdownMenuTrigger className="p-2">
                 <Menu className="h-6 w-6" />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 {DocsSidebarConstantText.map((item, index) => (
-                  <DropdownMenuItem key={index}>
-                    {item.heading}
+                  <DropdownMenuItem key={index} onSelect={() => setIsOpen(false)}>
+                    <Link href={item.url}>
+                      {item.heading}
+                    </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -54,7 +58,9 @@ export default function DashboardLayout({
               <Accordion key={index} type='single' collapsible className='w-full'>
                 <AccordionItem value={`item-${index}`}>
                   <AccordionTrigger className='text-lg'>
-                    {item.heading}
+                    <Link href={item.url}>
+                      {item.heading}
+                    </Link>
                   </AccordionTrigger>
                 </AccordionItem>
               </Accordion>
