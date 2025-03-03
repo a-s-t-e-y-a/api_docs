@@ -112,7 +112,7 @@ export default function SalesEstimatesPage() {
         </div>
         <div className='col-span-3 lg:p-3'>
           {DocsSidebarConstantText.map((item) =>
-            item.url === usePathname()
+            item.url === pathname
               ? item.curl.map((curl, index) => (
                   <CodeDisplay
                     key={index}
