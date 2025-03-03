@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {  SubHeading3 } from '../typography/typographyHeadings';
+import { SubHeading3 } from '../typography/typographyHeadings';
 import { Copy } from 'lucide-react';
 
 interface CodeDisplay {

@@ -48,7 +48,7 @@ export default function DashboardLayout({
                   <DropdownMenuItem key={index} onSelect={() => setIsOpen(false)}>
                     <Link href={item.url}>
                       {item.heading}
-                    </Link>
+                    </Link>s
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
