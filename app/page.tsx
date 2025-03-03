@@ -6,7 +6,7 @@ export default function Home() {
       Lorem ipsum, dolor sit
     </div>
 
-    <div className=" text-sm font-normal text-text-disabled">
+   <div className=" text-sm font-normal text-text-disabled">
       Lorem ipsum, 
     </div>
   </>

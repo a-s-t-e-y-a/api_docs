@@ -1,6 +1,6 @@
 export function OrderedList({ list }: { list: string[] }) {
   return (
-    <ol className="list-decimal list-inside space-y-1 mb-2 pl-5">
+    <ol className='mb-2 list-inside list-decimal space-y-1 pl-5'>
       {list.map((item) => (
         <ListItem key={item} item={item} />
       ))}
@@ -9,6 +9,8 @@ export function OrderedList({ list }: { list: string[] }) {
 }
 export function ListItem({ item }: { item: string }) {
   return (
-    <li className="text-base font-normal leading-loose tracking-tight">{item}</li>
+    <li className='text-base font-normal leading-loose tracking-tight'>
+      {item}
+    </li>
   );
 }
