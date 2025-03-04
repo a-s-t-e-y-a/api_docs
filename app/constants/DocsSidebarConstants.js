@@ -432,12 +432,6 @@ const DocsSidebarConstantText = [
     ],
   },
   {
-    page: 'currencies',
-    heading: 'Currencies',
-    url: '/api/docs/currencies',
-    curl: [],
-  },
-  {
     page: 'attachments',
     heading: 'Attachments',
     url: '/api/docs/attachments',
@@ -841,12 +835,6 @@ const DocsSidebarConstantText = [
     ],
   },
   {
-    page: 'expenses',
-    heading: 'Expenses',
-    url: '/api/docs/expenses',
-    curl: [],
-  },
-  {
     page: 'transactions-locking',
     heading: 'Transactions Locking',
     url: '/api/docs/transactions-locking',
@@ -1067,43 +1055,416 @@ const DocsSidebarConstantText = [
     page: 'import',
     heading: 'Import',
     url: '/api/docs/import',
-    curl: [],
+    curl: [
+      {
+        heading: 'Upload File',
+        curlCommand: `curl --location --globoff '{{base}}/import/file' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--form 'file=@"/path/to/file.xlsx"'`
+      },
+      {
+        heading: 'Map Fields',
+        curlCommand: `curl --location --globoff '{{base}}/import/{{import_id}}/mapping' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--form 'file=@"/path/to/file.xlsx"'`
+      },
+      {
+        heading: 'Preview Import',
+        curlCommand: `curl --location --globoff '{{base}}/import/{{import_id}}/preview' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+      },
+      {
+        heading: 'Get Import Metadata',
+        curlCommand: `curl --location --globoff '{{base}}/import/{{import_id}}/preview' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+      },
+      {
+        heading: 'Download Sample',
+        curlCommand: `curl --location --globoff '{{base}}/import/{{import_id}}/sample' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+      },
+      {
+        heading: 'Process Import',
+        curlCommand: `curl --location --globoff '{{base}}/import/{{import_id}}/import' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--form 'file=@"/path/to/file.xlsx"'`
+      }
+    ]
   },
   {
     page: 'inventory-adjustments',
     heading: 'Inventory Adjustments',
     url: '/api/docs/inventory-adjustments',
-    curl: [],
+    curl: [
+      {
+        heading: 'Quick Inventory Adjustment',
+        curlCommand: `curl --location --request POST '{{base}}/inventory_adjustments/quick' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+      },
+      {
+        heading: 'Publish Inventory Adjustment',
+        curlCommand: `curl --location --request POST '{{base}}/inventory_adjustments/{{inventory_adjustment_id}}/publish' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+      },
+      {
+        heading: 'Delete Inventory Adjustment',
+        curlCommand: `curl --location --request DELETE '{{base}}/inventory_adjustments/{{inventory_adjustment_id}}' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+      },
+      {
+        heading: 'Retrieve Single Adjustment',
+        curlCommand: `curl --location --request GET '{{base}}/inventory_adjustments/{{inventory_adjustment_id}}' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+      },
+      {
+        heading: 'List All Adjustments',
+        curlCommand: `curl --location --request GET '{{base}}/inventory_adjustments' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+      }
+    ]
   },
   {
-    page: 'sale-invoices',
-    heading: 'Sale Invoices',
-    url: '/api/docs/sale-invoices',
-    curl: [],
+    page: 'sales-invoices',
+    heading: 'Sales Invoices',
+    url: '/api/docs/sales-invoices',
+    curl: [
+        {
+            heading: 'Create Invoice',
+            curlCommand: `curl --location --request POST '{{base}}/sales/invoices' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Content-Type: application/json' \\
+--data '{
+    "customer_id": 1,
+    "invoice_date": "2023-01-01",
+    "due_date": "2023-02-01",
+    "invoice_no": "INV-00001",
+    "reference_no": "REF-00001",
+    "delivered": true,
+    "entries": [
+        {
+            "index": 1,
+            "item_id": 1001,
+            "quantity": 1,
+            "rate": 500,
+            "description": "Item description",
+            "tax_rate_id": 5
+        }
+    ]
+}'`
+        },
+        {
+            heading: 'Edit Invoice',
+            curlCommand: `curl --location --request POST '{{base}}/sales/invoices/{{sale_invoice_id}}' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Content-Type: application/json' \\
+--data '{
+    "customer_id": 1,
+    "invoice_date": "2023-01-01",
+    "due_date": "2023-02-01",
+    "invoice_no": "INV-00001",
+    "reference_no": "REF-00001",
+    "delivered": true,
+    "entries": [
+        {
+            "index": 1,
+            "item_id": 1001,
+            "quantity": 1,
+            "rate": 500,
+            "description": "Item description"
+        }
+    ]
+}'`
+        },
+        {
+            heading: 'Send Invoice Email',
+            curlCommand: `curl --location --request POST '{{base}}/sales/invoices/{{sale_invoice_id}}/mail' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Content-Type: application/json' \\
+--data '{
+    "subject": "Invoice Email",
+    "to": "customer@example.com",
+    "attach_invoice": true
+}'`
+        },
+        {
+            heading: 'Send Invoice Reminder',
+            curlCommand: `curl --location --request POST '{{base}}/sales/invoices/{{sale_invoice_id}}/mail-reminder' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Get Invoice PDF',
+            curlCommand: `curl --location --request GET '{{base}}/sales/invoices/{{sale_invoice_id}}' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Accept: application/pdf'`
+        },
+        {
+            heading: 'Get Invoice HTML',
+            curlCommand: `curl --location --request GET '{{base}}/sales/invoices/{{sale_invoice_id}}' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Accept: text/html'`
+        },
+        {
+            heading: 'Delete Invoice',
+            curlCommand: `curl --location --request DELETE '{{base}}/sales/invoices/{{sale_invoice_id}}' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Write-off Invoice',
+            curlCommand: `curl --location --request POST '{{base}}/sales/invoices/{{sale_invoice_id}}/writeoff' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Content-Type: application/json' \\
+--data '{
+    "expense_account_id": "1001",
+    "reason": "Bad debt write-off"
+}'`
+        },
+        {
+            heading: 'Mark as Delivered',
+            curlCommand: `curl --location --request POST '{{base}}/sales/invoices/{{sale_invoice_id}}/deliver' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        }
+    ]
   },
   {
     page: 'vendors',
     heading: 'Vendors',
     url: '/api/docs/vendors',
-    curl: [],
+    curl: [
+        {
+            heading: 'Create Vendor',
+            curlCommand: `curl --location --request POST '{{base}}/vendors' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Content-Type: application/json' \\
+--data '{
+    "customer_type": "business",
+    "display_name": "New vendor"
+}'`
+        },
+        {
+            heading: 'Edit Vendor Opening Balance',
+            curlCommand: `curl --location --request POST '{{base}}/vendors/{{vendor_id}}/opening_balance' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Content-Type: application/json' \\
+--data '{
+    "opening_balance": 100,
+    "opening_balance_at": "2020-02-02",
+    "opening_balance_exchange_rate": 20.2,
+    "opening_balance_branch_id": 1
+}'`
+        },
+        {
+            heading: 'Edit Vendor',
+            curlCommand: `curl --location --request POST '{{base}}/vendors/{{vendor_id}}' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'List Vendors',
+            curlCommand: `curl --location --request GET '{{base}}/vendors' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Get Single Vendor',
+            curlCommand: `curl --location --request GET '{{base}}/vendors/{{vendor_id}}' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Delete Vendor',
+            curlCommand: `curl --location --request DELETE '{{base}}/vendors/{{vendor_id}}' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        }
+    ]
   },
   {
-    page: 'sale-receipts',
-    heading: 'Sale Receipts',
-    url: '/api/docs/sale-receipts',
-    curl: [],
+    page: 'sales-receipts',
+    heading: 'Sales Receipts',
+    url: '/api/docs/sales-receipts',
+    curl: [
+        {
+            heading: 'Create Sale Receipt',
+            curlCommand: `curl --location --request POST '{{base}}/sales/receipts' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Content-Type: application/json' \\
+--data '{
+    "customer_id": 1,
+    "deposit_account_id": 1000,
+    "receipt_date": "2022-02-02",
+    "reference_no": "123",
+    "receipt_no": "ASD",
+    "delivered": false,
+    "branch_id": 1,
+    "warehouse_id": 1,
+    "entries": [
+        {
+            "index": 1,
+            "item_id": 1001,
+            "quantity": 1,
+            "rate": 2000,
+            "description": "Sample item"
+        }
+    ]
+}'`
+        },
+        {
+            heading: 'List Sales Receipts',
+            curlCommand: `curl --location --request GET '{{base}}/sales/receipts' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Get Receipt PDF',
+            curlCommand: `curl --location --request GET '{{base}}/sales/receipts/{{sale_receipt_id}}' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Accept: application/pdf'`
+        },
+        {
+            heading: 'Send Receipt Email',
+            curlCommand: `curl --location --request POST '{{base}}/sales/receipts/{{sale_receipt_id}}/mail' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Content-Type: application/json' \\
+--data '{
+    "subject": "Your Sales Receipt",
+    "to": "customer@example.com"
+}'`
+        },
+        {
+            heading: 'Close Receipt',
+            curlCommand: `curl --location --request POST '{{base}}/sales/receipts/{{sale_receipt_id}}/close' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Delete Receipt',
+            curlCommand: `curl --location --request DELETE '{{base}}/sales/receipts/{{sale_receipt_id}}' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        }
+    ]
   },
   {
     page: 'pdf-templates',
     heading: 'PDF Templates',
     url: '/api/docs/pdf-templates',
-    curl: [],
+    curl: [
+        {
+            heading: 'Create PDF Template',
+            curlCommand: `curl --location --request POST '{{base}}/pdf_templates' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Content-Type: application/json'`
+        },
+        {
+            heading: 'List PDF Templates',
+            curlCommand: `curl --location --request GET '{{base}}/pdf_templates' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Get Single Template',
+            curlCommand: `curl --location --request GET '{{base}}/pdf_templates/1' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Get Template By Resource',
+            curlCommand: `curl --location --request GET '{{base}}/pdf_templates/1' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Get Branding State',
+            curlCommand: `curl --location --request GET '{{base}}/pdf_templates/state' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Delete Template',
+            curlCommand: `curl --location --request DELETE '{{base}}/pdf_templates/4' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        }
+    ]
   },
   {
     page: 'warehouses',
     heading: 'Warehouses',
     url: '/api/docs/warehouses',
-    curl: [],
+    curl: [
+        {
+            heading: 'Create Warehouse',
+            curlCommand: `curl --location --request POST '{{base}}/warehouse' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Content-Type: application/json' \\
+--data '{
+    "name": "Warehouse #1",
+    "code": "1001"
+}'`
+        },
+        {
+            heading: 'Edit Warehouse',
+            curlCommand: `curl --location --request POST '{{base}}/warehouses/{{warehouse_id}}' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Content-Type: application/json' \\
+--data '{
+    "name": "Warehouse #1",
+    "code": "1001"
+}'`
+        },
+        {
+            heading: 'Mark as Primary',
+            curlCommand: `curl --location --request POST '{{base}}/warehouses/{{warehouse_id}}/mark-primary' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Activate Warehouse',
+            curlCommand: `curl --location --request POST '{{base}}/warehouses/{{warehouse_id}}/activate' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Get Warehouse',
+            curlCommand: `curl --location --request GET '{{base}}/warehouses/{{warehouse_id}}' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Delete Warehouse',
+            curlCommand: `curl --location --request DELETE '{{base}}/warehouses/{{warehouse_id}}' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        }
+    ]
   },
   {
     page: 'exchange-rate',
@@ -1115,13 +1476,78 @@ const DocsSidebarConstantText = [
     page: 'items',
     heading: 'Items',
     url: '/api/docs/items',
-    curl: [],
+    curl: [
+        {
+            heading: 'Create Item',
+            curlCommand: `curl --location --request POST '{{base}}/items' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Content-Type: application/json' \\
+--data '{
+    "name": "Item #2",
+    "code": "100001",
+    "type": "service",
+    "purchasable": true,
+    "sellable": true,
+    "sell_description": "description ....",
+    "purchase_description": "description ....",
+    "cost_account_id": 1019,
+    "sell_account_id": 1026,
+    "category_id": 1000
+}'`
+        },
+        {
+            heading: 'Activate Item',
+            curlCommand: `curl --location --request POST '{{base}}/items/{{item_id}}/activate' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Inactivate Item',
+            curlCommand: `curl --location --request POST '{{base}}/items/{{item_id}}/inactivate' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'List Items',
+            curlCommand: `curl --location --request GET '{{base}}/items' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Get Item Transactions',
+            curlCommand: `curl --location --request GET '{{base}}/items/{{item_id}}/transactions/invoices' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        },
+        {
+            heading: 'Delete Item',
+            curlCommand: `curl --location --request DELETE '{{base}}/items/{{item_id}}' \\
+--header 'x-access-token: {{token}}' \\
+--header 'organization-id: {{organization_id}}'`
+        }
+    ]
   },
   {
     page: 'vendor-credits',
     heading: 'Vendor Credits',
     url: '/api/docs/vendor-credits',
-    curl: [],
+    curl: [
+        {
+            heading: 'Create Vendor Credit',
+            curlCommand: `curl --location --request POST '{{base}}/vendor-credits' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Accept: application/json' \\
+--header 'Content-Type: application/json'`
+        },
+        {
+            heading: 'Delete Vendor Credit',
+            curlCommand: `curl --location --request DELETE '{{base}}/vendor-credits/6' \\
+--header 'organization-id: {{organization_id}}' \\
+--header 'Accept: application/json' \\
+--header 'Content-Type: application/json'`
+        }
+    ]
   },
 ];
 

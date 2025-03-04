@@ -46,9 +46,9 @@ export default function DashboardLayout({
               <DropdownMenuContent>
                 {DocsSidebarConstantText.map((item, index) => (
                   <DropdownMenuItem key={index} onSelect={() => setIsOpen(false)}>
-                    <Link href={item.url}>
+                    <Link href={item.url} scroll={false}>
                       {item.heading}
-                    </Link>s
+                    </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -58,7 +58,7 @@ export default function DashboardLayout({
               <Accordion key={index} type='single' collapsible className='w-full'>
                 <AccordionItem value={`item-${index}`}>
                   <AccordionTrigger className='text-lg'>
-                    <Link href={item.url}>
+                    <Link href={item.url} scroll={false}>
                       {item.heading}
                     </Link>
                   </AccordionTrigger>
